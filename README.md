@@ -291,3 +291,80 @@ and then we can switch between the serializers in the view:
 +             return SleepSerializer
 +         return CreateSleepSerializer
 ```
+---
+We will now create a login page for the users :
+
+in the root folder we will create a new app called `authentication`, and add a
+`views.py` file with the following code:
+
+```python
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
+from django.views.generic import TemplateView
+from django.shortcuts import redirect
+
+
+class LoginView(TemplateView):
+    template_name = 'auth/login.html'
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/api/sleep')
+        else:
+            return HttpResponse('Invalid login')
+```
+
+as well as a `urls.py` file with the following code:
+
+```python
+from django.urls import include, path
+from .views import LoginView
+
+urlpatterns = [
+    path('login', LoginView.as_view(), name='login'),
+]
+```
+
+we will also add the `authentication` app to the `INSTALLED_APPS`, and include the urls in the main `urls.py` file.
+
+Now we are ready to test the login page, by navigating to [http://localhost:8000/auth/login](http://localhost:8000/auth/login).
+
+### Templates
+
+We will now create a template for the login page. We create a new directory called `templates` in the `authentication` app directory,
+and create a new file in it called `auth/login.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <h1>Login</h1>
+    <form action="" method="post">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username">
+        <br/>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password">
+        <br/>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
+```
+
+# CSRF
+
+Django will now complain after submitting the form, because we did not add a CSRF token. This token protects against CSRF attacks.
+To use it, we need to add the `{% csrf_token %}` template tag to the end of the form.
