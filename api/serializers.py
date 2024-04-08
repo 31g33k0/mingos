@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Sleep
+from .models import Sleep, Mood
 
 
 class SleepSerializer(serializers.ModelSerializer):
@@ -16,3 +16,10 @@ class CreateSleepSerializer(serializers.ModelSerializer):
         model = Sleep
         # We do not want to let the user control the owner field.
         fields = ['date', 'hours', 'quality', 'notes']
+
+
+class MoodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Mood
+        fields = ['id', 'date', 'quality', 'notes', 'owner']
+    

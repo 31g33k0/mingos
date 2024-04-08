@@ -1,4 +1,5 @@
 from django.contrib import admin
-from .models import Sleep
+from .models import Sleep, Mood
 
 admin.site.register(Sleep)
+admin.site.register(Mood)

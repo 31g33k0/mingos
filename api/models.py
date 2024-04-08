@@ -18,3 +18,12 @@ class Sleep(models.Model):
     # it would just be displayed as 'Sleep object(1)'
     def __str__(self):
         return f'{self.date} - {self.hours} hours'
+
+
+class Mood(models.Model):
+    date = models.DateTimeField(default=datetime.now, blank=True)
+    quality = models.IntegerField(default=5, validators=[MinValueValidator(0),
+                                                         MaxValueValidator(5)])
+    notes = models.TextField(null=False, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              null=False, blank=False)
