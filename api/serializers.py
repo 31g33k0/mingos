@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Sleep, Mood
+from .models import Sleep, Mood, Crisis
 
 
 class SleepSerializer(serializers.ModelSerializer):
@@ -22,4 +22,9 @@ class MoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mood
         fields = ['id', 'date', 'quality', 'notes', 'owner']
-    
+
+
+class CrisisSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Crisis
+        fields = ['id', 'date', 'quality', 'notes', 'owner']

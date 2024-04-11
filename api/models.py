@@ -27,3 +27,12 @@ class Mood(models.Model):
     notes = models.TextField(null=False, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                               null=False, blank=False)
+
+
+class Crisis(models.Model):
+    date = models.DateTimeField(default=datetime.now, blank=True)
+    quality = models.IntegerField(default=5, validators=[MinValueValidator(0),
+                                                         MaxValueValidator(5)])
+    notes = models.TextField(null=False, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              null=False, blank=False)

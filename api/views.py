@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
-from .models import Sleep, Mood
-from .serializers import SleepSerializer, CreateSleepSerializer, MoodSerializer
+from .models import Sleep, Mood, Crisis
+from .serializers import SleepSerializer, CreateSleepSerializer, MoodSerializer, CrisisSerializer
 from django.views.generic import TemplateView
 
 
@@ -32,3 +32,13 @@ class MoodList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         # set the owner of the sleep to the current user
         serializer.save(owner=self.request.user)
+
+
+class CrisisList(generics.ListCreateAPIView):
+    queryset = Crisis.objects.all()
+    permission_classes = [IsAuthenticated]
+    serializer_class = CrisisSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+   
