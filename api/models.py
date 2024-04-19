@@ -36,3 +36,9 @@ class Crisis(models.Model):
     notes = models.TextField(null=False, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                               null=False, blank=False)
+
+
+class MoodImprovement(models.Model):
+    notes = models.TextField(null=False, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              null=False, blank=False)
