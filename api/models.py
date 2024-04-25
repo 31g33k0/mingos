@@ -42,3 +42,10 @@ class MoodImprovement(models.Model):
     notes = models.TextField(null=False, blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                               null=False, blank=False)
+
+
+class MedicalPart(models.Model):
+    date = models.DateTimeField(default=datetime.now, blank=True)
+    notes = models.TextField(null=False, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              null=False, blank=False)
